@@ -1,0 +1,10 @@
+---
+
+- hosts: compute
+  remote_user: manager
+  #become: yes
+  #become_user: root
+  roles: 
+#    - bsmap
+    - analysis 
+#   - bismark

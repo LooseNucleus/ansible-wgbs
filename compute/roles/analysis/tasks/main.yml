@@ -1,0 +1,42 @@
+--- 
+#copy the files over to the compute machine 
+#dest_folder is /home/manager/Desktop
+
+- name: copy files over 
+  copy: src=files/ dest={{ dest_folder }} force=no
+
+#download the genome file 
+- name: download the genome file 
+  get_url: url={{ data_url }} dest={{ dest_folder }} force=no 
+  ignore_errors: yes
+
+#decompress the genome file 
+- name: decompress the genome file 
+  command: gunzip --force Fragaria_vesca_v2.0.a1_pseudomolecules.fasta.gz chdir={{ dest_folder }}
+  ignore_errors: yes
+
+#rename the genome file for convenience
+- name: rename the genome reference file for convenience 
+  command: mv Fragaria_vesca_v2.0.a1_pseudomolecules.fasta {{ ref_file }} chdir={{ dest_folder }}
+  ignore_errors: yes
+
+#begin the analysis 
+- name: perform the analysis 
+  raw: bsmap -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} 
+
+#perform the second analysis 
+- name: perform second analysis 
+  raw: bsmap -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} 
+
+#perform third analysis 
+- name: perform third analysis 
+  raw: bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }}
+
+#retrieve the results 
+- name: retrieve results 
+  synchronize: src={{ item }} dest={{ data_folder }} rsync_opts="--progress" mode=pull use_ssh_args=yes 
+  with_items: 
+    - "{{ dest_folder }}/{{ result1 }}"
+    - "{{ dest_folder }}/{{ result2 }}"
+    - "{{ dest_folder }}/{{ result3 }}" 
+  tags: delivery

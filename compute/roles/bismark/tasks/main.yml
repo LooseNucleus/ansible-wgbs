@@ -1,0 +1,44 @@
+---
+#install bowtie if required 
+- name: install bowtie2 if required 
+  apt: name=bowtie2 state=present
+
+#download bismark 
+- name: get download and unpack bismark 
+  unarchive: src={{ bismark_src_url }} dest={{ dest_folder }} copy=no creates={{ dest_folder }}/bismark_v0.15.0
+  ignore_errors: yes
+
+#download genome file 
+- name: download the genome file 
+  get_url: url={{ data_url }} dest={{ dest_folder }} force=no
+  ignore_errors: yes
+
+#decompress the genome file 
+- name: decompress the genome folder 
+  command: gunzip --force Fragaria_vesca_v2.0.a1_pseudomolecules.fasta.gz chdir={{ dest_folder }} 
+  ignore_errors: yes
+
+#make genome folder for convenience 
+- name: make folder for decompressed genome 
+  command: mkdir genome chdir={{ dest_folder }} 
+  ignore_errors: yes
+
+#move decompressed genome
+- name: move decompressed genome 
+  command: mv {{ dest_folder }}/Fragaria_vesca_v2.0.a1_pseudomolecules.fasta /{{ dest_folder }}/genome/{{ ref_file }} 
+  ignore_errors: yes
+
+#prepare the genome 
+- name: prepare the genome 
+  command: "{{ bis_folder }}/bismark_genome_preparation --verbose {{ genome_folder }}" 
+
+#run bismark 
+- name: run bismark 
+  command: "{{ bis_folder}}/bismark --bowtie2 {{ genome_folder }} {{ query_file1 }}"
+  tags: bismark
+
+#run bismark methylation extractor 
+- name: run bismark methlyation extractor 
+  command: ./bismark_methylation_extractor 
+  tags: bismark
+ 

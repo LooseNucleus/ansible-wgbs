@@ -1,0 +1,12 @@
+ansible_become_pass: manager
+bowtie2_url: http://iweb.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.2.8/bowtie2-2.2.8-macos-x86_64.zip 
+bismark_src_url: http://www.bioinformatics.babraham.ac.uk/projects/bismark/bismark_v0.15.0.tar.gz	
+dest_folder: /home/manager/Desktop
+genome_folder: /home/manager/Desktop/genome 
+bowtie_path: /usr/bin/bowtie2
+data_folder: /Users/readyb/Desktop
+ref_file: reference.fasta
+query_file1: Straw-ERFv27-WGBS_S14_L003_Rl_001.fast
+query_file2: Straw-ERFv27-WGBS_S14_L003_R2_001.fastq
+data_url: ftp://ftp.bioinfo.wsu.edu/www.rosaceae.org/Fragaria_vesca/Fvesca-genome.v2.0.a1/assembly/Fragaria_vesca_v2.0.a1_pseudomolecules.fasta.gz
+bis_folder: /home/manager/Desktop/bismark_v0.15.0

@@ -1,0 +1,11 @@
+#main.yml 
+#this is using biolinux, so apt-get will be the package manager 
+--- 
+- name: download bsmap 
+  get_url: url=http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz dest=/home/manager/Desktop
+  
+- name: unpack bsmap 
+  unarchive: src=/home/manager/Desktop/bsmap-2.90.tgz dest=/home/manager/Desktop copy=no
+
+- name: install bsmap 
+  command: creates=/usr/bsmap chdir=/home/manager/Desktop/bsmap-2.90 make install 
