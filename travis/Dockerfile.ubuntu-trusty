@@ -7,6 +7,6 @@ RUN apt-add-repository -y ppa:ansible/ansible && apt-get update && apt-get insta
     ansible \
  && rm -rf /var/lib/apt/lists/*
 
-RUN echo "[local]\nlocalhost ansible_connection=local\n[defaults]\nroles_path=/home/roles\n" > /home/ansible.cfg
+RUN echo "[local]\nlocalhost ansible_connection=local\n[defaults]\nroles_path=/home/roles\n" > /home/tests/ansible.cfg
 
 ENTRYPOINT ["/sbin/init"]
