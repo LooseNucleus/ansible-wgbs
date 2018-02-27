@@ -1,6 +1,9 @@
 #main.yml 
 #this is using biolinux, so apt-get will be the package manager 
 --- 
+- name: run setup 
+  setup:
+
 - name: download bsmap 
   get_url: 
     url: http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz 
