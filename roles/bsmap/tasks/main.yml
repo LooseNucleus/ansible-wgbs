@@ -5,7 +5,7 @@
   get_url: url=http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz dest={{ ansible_env.HOME }}
   
 - name: unpack bsmap 
-  unarchive: src={{ ansible_env.HOME }}/bsmap-2.90.tgz dest=/home/{{ ansible_user_id}} copy=no
+  unarchive: src={{ ansible_env.HOME }}/bsmap-2.90.tgz dest={{ ansible_env.HOME }} copy=no
 
 - name: install bsmap 
   command: creates=/usr/bsmap chdir={{ ansible_env.HOME }}/bsmap-2.90 make install 
