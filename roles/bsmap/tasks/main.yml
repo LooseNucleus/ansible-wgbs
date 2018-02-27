@@ -2,10 +2,10 @@
 #this is using biolinux, so apt-get will be the package manager 
 --- 
 - name: download bsmap 
-  get_url: url=http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz dest=/home/{{ ansible_user_id }}
+  get_url: url=http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz dest={{ ansible_env.HOME }}
   
 - name: unpack bsmap 
-  unarchive: src=/home/{{ ansible_user_id }}/bsmap-2.90.tgz dest=/home/{{ ansible_user_id}} copy=no
+  unarchive: src={{ ansible_env.HOME }}/bsmap-2.90.tgz dest=/home/{{ ansible_user_id}} copy=no
 
 - name: install bsmap 
-  command: creates=/usr/bsmap chdir=/home/{{ ansible_user_id }}/bsmap-2.90 make install 
+  command: creates=/usr/bsmap chdir={{ ansible_env.HOME }}/bsmap-2.90 make install 
