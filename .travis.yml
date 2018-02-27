@@ -24,7 +24,7 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_CONFIG=/home/tests/ansible.cfg ansible-playbook -vvv -i /home/tests/inventory /home/tests/test.yml --syntax-check'
 
   - >
-     'sudo docker exec "$(cat ${container_id})" env ANSIBLE_CONFIG=/home/tests/ansible.cfg ansible-playbook -i /home/tests/inventory -vvvv /home/tests/test.yml'
+     'sudo docker exec "$(cat ${container_id})" env ANSIBLE_CONFIG=/home/tests/ansible.cfg ansible-playbook -vvvv -i /home/tests/inventory /home/tests/test.yml'
      | grep -q 'failed=0'
      && (echo 'task failure test: pass' && exit 0)
      || (echo 'task failure test: fail' && exit 0)
