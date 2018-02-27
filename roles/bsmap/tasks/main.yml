@@ -12,7 +12,7 @@
 - name: unpack bsmap 
   unarchive: 
     src: "{{ ansible_env.HOME }}/bsmap-2.90.tgz" 
-    dest: "{{ ansible_env.HOME }}" 
+    dest: "{{ ansible_env.HOME }}/bsmap-2.90" 
     copy: no
 
 - name: install bsmap 
