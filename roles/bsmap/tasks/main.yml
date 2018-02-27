@@ -11,11 +11,11 @@
   
 - name: unpack bsmap 
   unarchive: 
-    src: "{{ ansible_env.HOME }}"/bsmap-2.90.tgz 
+    src: "{{ ansible_env.HOME }}/bsmap-2.90.tgz" 
     dest: "{{ ansible_env.HOME }}" 
     copy:no
 
 - name: install bsmap 
   make:
-    chdir: "{{ ansible_env.HOME }}"/bsmap-2.90
+    chdir: "{{ ansible_env.HOME }}/bsmap-2.90"
     target: install
