@@ -9,5 +9,5 @@
 
 - name: install bsmap 
   make:
-    chdir:{{ ansible_env.HOME }}/bsmap-2.90
+    chdir: {{ ansible_env.HOME }}/bsmap-2.90
     target: install
