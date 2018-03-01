@@ -8,7 +8,7 @@ python:
 
 env: 
   global: 
-    - ANSIBLE_CONFIG="${PWD}"/tests/ansible.cfg
+    - ANSIBLE_CONFIG=""${PWD}"/tests/ansible.cfg"
   matrix:
     - distribution: ubuntu
       version: trusty
