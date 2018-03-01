@@ -1,5 +1,8 @@
 --- 
-- hosts: localhost
+- hosts: all 
   remote_user: root
   roles: 
-  - bsmap 
+  - { coadunate.devtools }
+  - bsmap
+
+ 

@@ -1,5 +1,4 @@
 #main.yml 
-#this is using biolinux, so apt-get will be the package manager 
 --- 
 - name: run setup 
   setup:
