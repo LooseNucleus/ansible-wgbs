@@ -29,7 +29,7 @@ script:
   - 'sudo docker run --detach --privileged -v /sys/fs/cgroup:/sys/fs/cgroup -p 127.0.0.1:1234:22 ${distribution}-${version}:ansible > "${container_id}"'
   - echo "${PWD}"
   - ansible-galaxy install coadunate.devtools -p "${PWD}"/roles
-  - ansible-config dumo
+  - ansible-config dump
   - export ANSIBLE_CONFIG="${PWD}"/tests/ansible.cfg; ansible-playbook -i tests/inventory tests/test.yml
   
   - 'sudo docker rm -f "$(cat ${container_id})"'
