@@ -7,8 +7,11 @@ python:
   - "2.7"
 
 env: 
-  - distribution: ubuntu
-    version: trusty
+  global: 
+    - ANSIBLE_CONFIG="${PWD}"/tests/ansible.cfg
+  matrix:
+    - distribution: ubuntu
+      version: trusty
 
 services:
   - docker
