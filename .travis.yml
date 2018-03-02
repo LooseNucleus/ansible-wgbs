@@ -31,6 +31,6 @@ script:
   - echo "${PWD}"
   - ansible-galaxy install coadunate.devtools -p "${PWD}"/roles
   - ansible-config view tests/ansible.cfg
-  - env ANSIBLE_CONFIG="${PWD}"/tests/ansible.cfg ansible-playbook -i tests/inventory tests/test.yml
+  - env ANSIBLE_CONFIG="${PWD}"/tests/ansible.cfg ansible-playbook -vvv -i tests/inventory tests/test.yml
   
   - 'sudo docker rm -f "$(cat ${container_id})"'
