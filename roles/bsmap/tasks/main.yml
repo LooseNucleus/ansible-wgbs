@@ -4,6 +4,9 @@
 - name: Ensure that the software folder already exists 
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
 
+- name: make sure bsmap folder exists
+  file: path={{ ansible_env.PWD }}/software/bsmap-2.90 state=directory mode=0777
+
 - name: download bsmap 
   get_url: 
     url: http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz 
