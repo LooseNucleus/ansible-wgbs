@@ -1,6 +1,11 @@
 #main.yml 
 --- 
 
+- name: install build-essential package 
+  apt:
+    name: build-essential 
+    state: present
+
 - name: Ensure that the software folder already exists 
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
 
