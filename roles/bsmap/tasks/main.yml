@@ -23,10 +23,15 @@
     dest: "{{ ansible_env.PWD }}/software" 
     copy: no
 
-- name: install bsmap 
+- name: make bsmap 
   make:
-    chdir: "{{ ansible_env.HOME }}/software/bsmap-2.90"
-    target: install
+    chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
+
+- name: install bsmaP
+  make: 
+    chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
+    target:  install
+ 
 
 - name: Add bsmap to the PATH
   shell: echo export PATH={{ ansible_env.PWD }}/software/bsmap/:$PATH >> {{ ansible_env.PWD }}/.bashrc 
