@@ -3,7 +3,9 @@ FROM ubuntu:xenial
 RUN apt-get update 
 
 RUN apt-get install -y \
-    openssh-server
+    openssh-server \
+    python 
+
 RUN mkdir /var/run/sshd
 
 RUN echo 'root:toor' | chpasswd
