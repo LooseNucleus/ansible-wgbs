@@ -1,8 +1,11 @@
 --- 
 - hosts: all 
   remote_user: root
-  roles: 
-  - coadunate.devtools
-  - bsmap
+  gather_facts: yes
+  tasks: 
+  - include_role: 
+      name: coadunate.devtools
 
+  - include_role: 
+      name: bsmap
  

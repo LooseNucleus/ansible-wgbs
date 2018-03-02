@@ -5,6 +5,11 @@
     name: "@Development tools"
     state: present
 
+- name: install zlib files 
+  yum:
+    name: zlib-devel
+    state: present
+
 - name: Ensure that the software forlder already exists 
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
 

@@ -14,22 +14,22 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 RUN yum -y install epel-release
 RUN yum -y install \
-	git \ 
 	sudo \
         openssh-server \ 
-	chpasswd
+	chpasswdi \
+        python-setuptools
 
+RUN rm -f /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_rsa_key
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_ecdsa_key
+RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key 
+RUN ssh-keygen -A
 
 RUN echo "root:toor" | chpasswd
-RUN echo 'PermiteRootLogin yes' >> /etc/ssh/sshd_config
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 RUN echo 'sshd: ALL' >> /etc/hosts.allow
 
 RUN mkdir /var/run/sshd
 
-
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
-
-
-VOLUME ["/sys/fs/cgroup"]
 
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
