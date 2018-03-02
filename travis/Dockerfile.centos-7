@@ -17,9 +17,10 @@ RUN yum -y install \
 	git \ 
 	sudo \
         openssh-server \ 
-	passwd
+	chpasswd
 
-ADD ./start.sh /start.sh
+
+RUN echo "root:toor" | chpasswd
 RUN echo 'PermiteRootLogin yes' >> /etc/ssh/sshd_config
 RUN echo 'sshd: ALL' >> /etc/hosts.allow
 
@@ -30,6 +31,5 @@ RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
 
 VOLUME ["/sys/fs/cgroup"]
-RUN chmod 775 /start.sh
 
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
