@@ -6,7 +6,7 @@
 - name: fetch nanopolish from github 
   git: 
     repo: 'https://github.com/jts/nanopolish.git'
-    dest: "{{ ansible_env.PWD }}"/software
+    dest: "{{ ansible_env.PWD }}/software"
     clone: yes
 
 - name: make nanopolish 
