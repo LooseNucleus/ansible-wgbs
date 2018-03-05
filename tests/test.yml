@@ -8,4 +8,7 @@
 
   - include_role: 
       name: bsmap
- 
+
+   - include_role: 
+      name: nanopolish 
+

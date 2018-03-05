@@ -1,0 +1,19 @@
+---
+
+- name: make sure software directory exists
+  file: path={{ ansible_env.PWD }}/software state=directory mode=0777
+
+- name: fetch nanopolish from github 
+  git: 
+    repo: 'https://github.com/jts/nanopolish.git'
+    dest: "{{ ansible_env.PWD }}"/software
+    clone: yes
+
+- name: make nanopolish 
+  chdir: "{{ ansible_env.PWD }}/software/nanopolish"
+  target: all
+
+- name: add nanopolish to PATH 
+  shell: echo export PATH={{ ansible_env.PWD }}/software/nanopolish:$PATH >> {{ ansible_env.PWD }}./bashrc
+
+
