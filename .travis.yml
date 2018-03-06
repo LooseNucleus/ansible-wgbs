@@ -9,8 +9,6 @@ python:
 env: 
   - distribution: centos
     version: 7
-#  - distribution: centos
-#    version: 6
   - distribution: ubuntu
     version: xenial
   - distribution: ubuntu
