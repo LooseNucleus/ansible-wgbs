@@ -15,7 +15,7 @@
     target: all
 
 - name: add nanopolish to PATH 
-  shell: echo export PATH={{ ansible_env.PWD }}/software/nanopolish:$PATH >> {{ ansible_env.PWD }}./bashrc
+  shell: echo export PATH={{ ansible_env.PWD }}/software/nanopolish:$PATH >> {{ ansible_env.PWD }}/.bashrc
   args: 
     chdir: "{{ ansible_env.HOME }}"
    
