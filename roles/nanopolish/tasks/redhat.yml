@@ -1,4 +1,8 @@
 ---
+- name: make sure wget is installed 
+  yum: 
+    name: wget 
+    state: present
 
 - name: make sure software directory exists
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
