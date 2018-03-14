@@ -2,3 +2,4 @@ hosts
 ansible.cfg
 roles/coadunate.devtools
 roles/analysis/files/
+roles/nanopore/files/
