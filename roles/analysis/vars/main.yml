@@ -1,6 +1,5 @@
 ---
-ansible_become_pass: manager
-dest_folder: /home/manager/Desktop
+dest_folder: "{ ansible_env.PWD }" 
 data_url: ftp://ftp.bioinfo.wsu.edu/www.rosaceae.org/Fragaria_vesca/Fvesca-genome.v2.0.a1/assembly/Fragaria_vesca_v2.0.a1_pseudomolecules.fasta.gz 
 ref_file : reference.fasta
 query_file1: Straw-ERFv27-WGBS_S14_L003_R1_001.fastq 
