@@ -1,5 +1,5 @@
 ---
-dest_folder: "{ ansible_env.PWD }" 
+dest_folder: "{{ ansible_env.PWD }}" 
 data_url: ftp://ftp.bioinfo.wsu.edu/www.rosaceae.org/Fragaria_vesca/Fvesca-genome.v2.0.a1/assembly/Fragaria_vesca_v2.0.a1_pseudomolecules.fasta.gz 
 ref_file : reference.fasta
 query_file1: Straw-ERFv27-WGBS_S14_L003_R1_001.fastq 
@@ -7,4 +7,4 @@ query_file2: Straw-ERFv27-WGBS_S14_L003_R2_001.fastq
 result1: result1
 result2: result2
 result3: result3
-data_folder: /Users/readyb/Desktop
+data_folder: /Users/bryn/Desktop
