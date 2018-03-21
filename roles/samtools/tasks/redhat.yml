@@ -1,0 +1,111 @@
+---
+- name: install libbz2 
+  yum: 
+    name: "bzip2-devel"
+    state: present
+  become: yes
+
+- name: install xz-devel
+  yum: 
+    name: "xz-devel"
+    state: present
+  become: yes
+
+- name: install ncurses-devel
+  yum: 
+    name: "ncurses-devel"
+    state: present
+  become: yes
+
+- name: get samtools from github
+  git: 
+    repo: 'https://github.com/samtools/samtools' 
+    dest: "{{ ansible_env.PWD }}/software/samtools"
+    version: "1.7"
+
+- name: get hstlib from github
+  git: 
+    repo: 'https://github.com/samtools/htslib.git'
+    dest: "{{ ansible_env.PWD }}/software/htslib"
+    version: "1.7"
+
+- name: autoheader for htslib
+  shell: "autoheader"
+  args: 
+   chdir: "{{ ansible_env.PWD }}/software/htslib"
+
+- name: run autoconf for htslib
+  shell: "autoconf"
+  args:
+    chdir: "{{ ansible_env.PWD }}/software/htslib"
+
+- name: run configure for htslib 
+  shell: "./configure"
+  args:
+    chdir: "{{ ansible_env.PWD }}/software/htslib"
+
+- name: make htslib 
+  make: 
+    target: all 
+    chdir: "{{ ansible_env.PWD }}/software/htslib" 
+
+- name: run autoheader for samtools
+  shell: "autoheader"
+  args:
+    chdir: "{{ ansible_env.PWD }}/software/samtools"
+
+- name: generate the config script for samtools
+  shell: "autoconf -Wno-syntax"
+  args:
+    chdir: "{{ ansible_env.PWD}}/software/samtools"
+
+- name: run configure script for samtools
+  shell: "./configure" 
+  args:
+    chdir: "{{ ansible_env.PWD}}/software/samtools"
+
+- name: make samtools
+  make: 
+    target: all
+    chdir: "{{ ansible_env.PWD}}/software/samtools"
+
+#- name: Add samtools to the PATH
+#  shell: echo export PATH={{ ansible_env.PWD }}/software/samtools:$PATH >> {{ ansible_env.PWD }}/.bashrc 
+
+- name: Checks if the environment file already has an entry for the PATH
+  replace:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    regexp: 'export PATH=(.*)'
+    replace: 'export PATH=\1:modified'
+  register: checkPath
+
+- name: print checkPath status
+  debug:
+    msg: "checkPath status is {{ checkPath }}"
+
+- name: Add a PATH entry if the PATH is not already defined
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    line: "export PATH={{ ansible_env.PATH }}:{{ ansible_env.PWD }}/software/samtools"
+    regexp: ''
+    insertafter: EOF
+  when: checkPath.changed == false
+
+- name: append samtools to the PATH
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: "export PATH=(.*)"
+    line: 'export PATH={{ ansible_env.PWD }}/software/samtools\1'
+  when: checkPath.changed
+
+- name: fully fix path
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: 'export PATH=(.*)(:modified)(.*)'
+    line: 'export PATH=\1\3'
+  when: checkPath.changed

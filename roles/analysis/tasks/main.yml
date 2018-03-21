@@ -39,7 +39,7 @@
   command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -S 1"
 
 #retrieve the intermediate results 
-- name: retrieve results 
+#- name: retrieve results 
 #  fetch: src={{ item }} dest={{ data_folder }}/ flat=yes
 #  with_items: 
 #    - "{{ dest_folder }}/{{ result1 }}"
@@ -56,8 +56,8 @@
 - name: perform methylation ratio difference for paired reads
   command: "methratio.py -d reference.fasta -o methylRatioResult3 {{ result3 }}"
 
-- name retrieve final methylation results
-  fetch src={{ item }} dest={{ data_folder/ flat=yes
+- name: retrieve final methylation results
+  fetch: src={{ item }} dest={{ data_folder }}/ flat=yes
   with_items:
     - methylRatioResult1
     - methylRatioResult2

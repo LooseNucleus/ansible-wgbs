@@ -1,0 +1,56 @@
+---
+
+- name: get minimap2 from github
+  git: 
+    repo: 'https://github.com/lh3/minimap2.git'
+    dest: "{{ ansible_env.PWD }}/software/minimap2"
+
+- name: make minimap2 
+  make: 
+    chdir: "{{ ansible_env.PWD }}/software/minimap2"
+    target: all
+
+#- name: Add minimap2 to the PATH
+#  shell: echo export PATH={{ ansible_env.PWD }}/software/minimap2:$PATH >> {{ ansible_env.PWD }}/.bashrc
+#  args:
+#    executable: /bin/bash
+#  environment:
+#    BASH_ENV: "{{ ansible_env.PWD }}/.bashrc"
+
+- name: Checks if the environment file already has an entry for the PATH
+  replace:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    regexp: 'export PATH=(.*)'
+    replace: 'export PATH=\1:modified'
+  register: checkPath
+
+- name: print checkPath status
+  debug:
+    msg: "checkPath status is {{ checkPath }}"
+
+- name: Add a PATH entry if the PATH is not already defined
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    line: "export PATH={{ ansible_env.PATH }}:{{ ansible_env.PWD }}/software/minimap2"
+    regexp: ''
+    insertafter: EOF
+  when: checkPath.changed == false
+
+- name: append minimap2 to the PATH
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: "export PATH=(.*)"
+    line: 'export PATH={{ ansible_env.PWD }}/software/minimap2\1'
+  when: checkPath.changed
+
+- name: fully fix path
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: 'export PATH=(.*)(:modified)(.*)'
+    line: 'export PATH=\1\3'
+  when: checkPath.changed

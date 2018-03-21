@@ -1,8 +1,11 @@
 ---
 
-- hosts: compute
+- hosts: ubuntu
   roles: 
-    - coadunate.devtools
-    - bsmap
+#    - coadunate.devtools
+#    - bsmap
 #    - analysis 
 #   - bismark
+#    - minimap2
+#    - samtools
+    - nanopolish

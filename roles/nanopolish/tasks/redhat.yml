@@ -1,8 +1,8 @@
 ---
-- name: make sure wget is installed 
-  yum: 
-    name: wget 
-    state: present
+#- name: make sure wget is installed 
+#  yum: 
+#    name: wget 
+#    state: present
 
 - name: make sure software directory exists
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
@@ -22,5 +22,50 @@
   shell: echo export PATH={{ ansible_env.PWD }}/software/nanopolish:$PATH >> {{ ansible_env.PWD }}/.bashrc
   args:
     chdir: "{{ ansible_env.HOME }}"
+    executable: /bin/bash -l
 
+- name: install biopython and pysam for helper scripts 
+  pip: 
+    name: "{{ item }}"
+    state: present 
+ with_items: 
+  - biopython 
+  - pysam 
 
+- name: Checks if the environment file already has an entry for the PATH
+  replace:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    regexp: 'export PATH=(.*)'
+    replace: 'export PATH=\1:modified'
+  register: checkPath
+
+- name: print checkPath status
+  debug:
+    msg: "checkPath status is {{ checkPath }}"
+
+- name: Add a PATH entry if the PATH is not already defined
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    line: "export PATH={{ ansible_env.PATH }}:{{ ansible_env.PWD }}/software/nanopolish"
+    regexp: ''
+    insertafter: EOF
+  when: checkPath.changed == false
+
+- name: append nanopolish to the PATH
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: "export PATH=(.*)"
+    line: 'export PATH={{ ansible_env.PWD }}/software/nanopolish\1'
+  when: checkPath.changed
+
+- name: fully fix path
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: 'export PATH=(.*)(:modified)(.*)'
+    line: 'export PATH=\1\3'
+  when: checkPath.changed

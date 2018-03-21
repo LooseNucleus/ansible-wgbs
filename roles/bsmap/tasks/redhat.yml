@@ -1,14 +1,14 @@
 ---
 
-- name: install development tools 
-  yum: 
-    name: "@Development tools"
-    state: present
+#- name: install development tools 
+#  yum: 
+#    name: "@Development tools"
+#    state: present
 
-- name: install zlib files 
-  yum:
-    name: zlib-devel
-    state: present
+#- name: install zlib files 
+#  yum:
+#    name: zlib-devel
+#    state: present
 
 - name: Ensure that the software forlder already exists 
   file: path={{ ansible_env.PWD }}/software state=directory mode=0777
@@ -28,13 +28,48 @@
   make: 
     chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
 
-- name: install bsmap 
-  make: 
-   chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
-   target: install 
+#- name: install bsmap 
+#  make: 
+#   chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
+#   target: install 
 
-- name: add bsmap to the PATH 
-  shell: echo export PATH={{ ansible_env.PWD }}/software/bsmap-2.90$PATH >> {{ ansible_env.PWD }}/.bashrc
+- name: Checks if the environment file already has an entry for the PATH
+  replace:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    regexp: 'export PATH=(.*)'
+    replace: 'export PATH=\1:modified'
+  register: checkPath
+
+- name: print checkPath status
+  debug:
+    msg: "checkPath status is {{ checkPath }}"
+
+- name: Add a PATH entry if the PATH is not already defined
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    line: "export PATH={{ ansible_env.PATH }}:{{ ansible_env.PWD }}/software/bsmap"
+    regexp: ''
+    insertafter: EOF
+  when: checkPath.changed == false
+
+- name: append bsmap to the PATH
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: "export PATH=(.*)"
+    line: 'export PATH={{ ansible_env.PWD }}/software/bsmap\1'
+  when: checkPath.changed
+
+- name: fully fix path
+  lineinfile:
+    dest: "{{ ansible_env.PWD }}/.bashrc"
+    state: present
+    backrefs: yes
+    regexp: 'export PATH=(.*)(:modified)(.*)'
+    line: 'export PATH=\1\3'
+  when: checkPath.changed 
 
 - name: remove gz file
   file: 

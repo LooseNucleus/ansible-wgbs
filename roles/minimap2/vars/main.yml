@@ -1,0 +1,2 @@
+---
+BASH_ENV: "{{ ansible_env.PWD }}/.bashrc"
