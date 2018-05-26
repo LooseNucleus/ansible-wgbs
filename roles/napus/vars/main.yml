@@ -1,0 +1,10 @@
+---
+dest_folder: "{{ ansible_env.PWD }}" 
+genome_file_name: Bna_genome_v3.1.fa
+ref_file : reference.fasta
+query_file1: 1WL_ER1630-1_control_R1_combined.fastq.gz
+query_file2: 1WL_ER1630-1_control_R2_combined.fastq.gz
+result1: result1
+result2: result2
+result3: result3
+data_folder: /Users/bryn/Desktop

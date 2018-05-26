@@ -1,0 +1,61 @@
+--- 
+#copy the files over to the compute machine 
+
+- name: copy files over 
+  copy: src=files/ dest={{ dest_folder }} force=no
+
+#decompress the genome file
+#- name: decompress the genome file
+#  command: gunzip --force {{ genome_file_name }} chdir={{ dest_folder }}
+#  ignore_errors: yes
+
+#rename the genome file for convenience
+- name: rename the genome reference file for convenience 
+  command: mv {{ genome_file_name }} {{ ref_file }} chdir={{ dest_folder }}
+  ignore_errors: yes
+
+- name: decompress first data file
+  command: gunzip --force {{ query_file1 }}.gz chdir={{ dest_folder }}
+
+- name: decrompress second data file
+  command: gunzip --force {{ query_fil2 }}.gz chdir={{ dest_folder }}
+
+- name: perform the analysis 
+  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} -S 1" 
+
+#perform the second analysis 
+- name: perform second analysis 
+  command: "bsmap -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} -S 1" 
+
+#perform third analysis 
+- name: perform third analysis 
+  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -S 1"
+
+#retrieve the intermediate results 
+#- name: retrieve results 
+#  fetch: src={{ item }} dest={{ data_folder }}/ flat=yes
+#  with_items: 
+#    - "{{ dest_folder }}/{{ result1 }}"
+#    - "{{ dest_folder }}/{{ result2 }}"
+#    - "{{ dest_folder }}/{{ result3 }}" 
+#  tags: delivery
+
+- name: perform methylation ratio difference for forward reads
+  command: "methratio.py -d reference.fasta -o methylRatioResult1 {{ result1 }}" 
+
+- name: perform methylation ratio difference for reverse reads
+  command: "methratio.py -d reference.fasta -o methylRatioResult2 {{ result2 }}"
+
+- name: perform methylation ratio difference for paired reads
+  command: "methratio.py -d reference.fasta -o methylRatioResult3 {{ result3 }}"
+
+- name: retrieve final methylation results
+  fetch: src={{ item }} dest={{ data_folder }}/ flat=yes
+  with_items:
+    - methylRatioResult1
+    - methylRatioResult2
+    - methylRatioResult3
+  tags: delivery 
+
+
+

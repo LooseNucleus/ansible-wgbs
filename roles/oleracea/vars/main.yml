@@ -1,0 +1,10 @@
+---
+dest_folder: "{{ ansible_env.PWD }}" 
+genome_file_name: Boleracea.v1.genome.fa
+ref_file : reference.fasta
+query_file1: TO1000_leaf_ACAGTG_R1_001.fastq
+query_file2: TO1000_leaf_ACAGTG_R2_001.fastq 
+result1: result1
+result2: result2
+result3: result3
+data_folder: /Users/bryn/Desktop

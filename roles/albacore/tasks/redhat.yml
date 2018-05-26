@@ -1,0 +1,23 @@
+---
+- name: make sure python 3 is present 
+  yum: 
+    name: python36.x86_64
+    state: present
+  become: yes
+
+- name: make sure pip3 is install
+  yum: 
+    name: python34-pip.noarch
+    state: present
+  become: yes
+
+- name: download albacore from ONT
+  get_url: 
+    url: https://mirror.oxfordnanoportal.com/software/analysis/ont_albacore-2.2.4-cp34-cp34m-manylinux1_x86_64.whl
+    dest: "{{ ansible_env.PWD }}/software"
+
+- name: use pip3 to install albacore
+  pip:
+    name: "{{ ansible_env.PWD }}/software/ont_albacore-2.2.4-cp34-cp34m-manylinux1_x86_64.whl"
+    executable: pip3
+  become: yes
