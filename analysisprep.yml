@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks: 
+  - name: delete contents of log file 
+    shell: echo "" > /Users/bryn/Desktop/logs/ansible.log

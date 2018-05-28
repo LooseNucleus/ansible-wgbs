@@ -3,3 +3,5 @@ ansible.cfg
 roles/coadunate.devtools
 roles/analysis/files/
 roles/nanopore/files/
+roles/oleracea/files/
+roles/napus/file/

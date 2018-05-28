@@ -40,9 +40,9 @@
     replace: 'export PATH=\1:modified'
   register: checkPath
 
-- name: print checkPath status
-  debug:
-    msg: "checkPath status is {{ checkPath }}"
+#- name: print checkPath status
+#  debug:
+#    msg: "checkPath status is {{ checkPath }}"
 
 - name: Add a PATH entry if the PATH is not already defined
   lineinfile:
@@ -59,7 +59,7 @@
     state: present
     backrefs: yes
     regexp: "export PATH=(.*)"
-    line: 'export PATH={{ ansible_env.PWD }}/software/bsmap\1'
+    line: 'export PATH={{ ansible_env.PWD }}/software/bsmap:\1'
   when: checkPath.changed
 
 - name: fully fix path

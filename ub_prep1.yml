@@ -1,0 +1,5 @@
+---
+- hosts: ubuntu
+  roles: 
+    - { role: coadunate.devtools, become: yes } 
+    - bsmap
