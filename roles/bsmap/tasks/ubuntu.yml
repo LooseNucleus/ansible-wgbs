@@ -52,7 +52,7 @@
     state: present
     backrefs: yes
     regexp: "export PATH=(.*)"
-    line: 'export PATH={{ ansible_env.PWD }}/software/bsmap:\1'
+    line: 'export PATH={{ ansible_env.PWD }}/software/bsmap-2.90:\1'
   when: checkPath.changed
 
 - name: fully fix path
@@ -68,3 +68,15 @@
   file: 
     state: absent 
     path: "{{ ansible_env.PWD }}/bsmap-2.90.tgz"
+
+- name: remove noninteractive filter on bashrc
+  blockinfile: 
+    path: "{{ ansible_env.PWD }}/.bashrc"
+    marker: "case $- in"
+    state: absent
+    block: |
+      case $- in
+      *i*) ;;
+      *) return;;
+      esac
+
