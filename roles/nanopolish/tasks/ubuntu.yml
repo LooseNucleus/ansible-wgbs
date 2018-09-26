@@ -1,4 +1,3 @@
----
 #- name: make sure wget is installed 
 #  apt: 
 #    name: wget 
@@ -71,3 +70,15 @@
     regexp: 'export PATH=(.*)(:modified)(.*)'
     line: 'export PATH=\1\3'
   when: checkPath.changed
+
+- name: install R
+  apt:
+    name: r-base
+    state: present
+
+
+- name: adding a few R packages
+  command: Rscript --vanilla -e "install.packages('{{ item }}', repos='https://mirror.its.sfu.ca/mirror/CRAN/')"
+  loop:
+  - ggplot2 
+  - RColorBrewer

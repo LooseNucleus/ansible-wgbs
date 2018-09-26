@@ -1,0 +1,76 @@
+
+2018-09-25 15:42:29,362 p=8688 u=ubuntu |  changed: [localhost]
+2018-09-25 15:42:29,396 p=8688 u=ubuntu |  TASK [delete contents of results file] *****************************************
+2018-09-25 15:42:30,284 p=8688 u=ubuntu |   [WARNING]: Consider using the file module with state=absent rather than
+running rm.  If you need to use command because file is insufficient you can
+add warn=False to this command task or set command_warnings=False in
+ansible.cfg to get rid of this message.
+
+2018-09-25 15:42:30,285 p=8688 u=ubuntu |  changed: [localhost]
+2018-09-25 15:42:30,287 p=8688 u=ubuntu |  PLAY RECAP *********************************************************************
+2018-09-25 15:42:30,287 p=8688 u=ubuntu |  localhost                  : ok=3    changed=2    unreachable=0    failed=0   
+2018-09-25 15:42:30,287 p=8688 u=ubuntu |  Playbook run took 0 days, 0 hours, 0 minutes, 2 seconds
+2018-09-25 15:42:50,537 p=8800 u=ubuntu |  PLAY [target] ******************************************************************
+2018-09-25 15:42:50,551 p=8800 u=ubuntu |  TASK [Gathering Facts] *********************************************************
+2018-09-25 15:42:54,509 p=8800 u=ubuntu |  ok: [container]
+2018-09-25 15:42:54,580 p=8800 u=ubuntu |  TASK [nano_analysis : copy over files] *****************************************
+2018-09-25 15:51:53,928 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:51:53,988 p=8800 u=ubuntu |  TASK [nano_analysis : decompress the folder] ***********************************
+2018-09-25 15:52:24,026 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:52:24,083 p=8800 u=ubuntu |  TASK [nano_analysis : untar archive] *******************************************
+2018-09-25 15:52:38,787 p=8800 u=ubuntu |   [WARNING]: Consider using the unarchive module rather than running tar.  If
+you need to use command because unarchive is insufficient you can add
+warn=False to this command task or set command_warnings=False in ansible.cfg to
+get rid of this message.
+
+2018-09-25 15:52:38,788 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:52:38,840 p=8800 u=ubuntu |  TASK [nano_analysis : create index file] ***************************************
+2018-09-25 15:53:10,700 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:53:10,752 p=8800 u=ubuntu |  TASK [nano_analysis : align reads to the reference genome] *********************
+2018-09-25 15:54:10,232 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:54:10,277 p=8800 u=ubuntu |  TASK [nano_analysis : run samtools index] **************************************
+2018-09-25 15:54:14,583 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 15:54:14,640 p=8800 u=ubuntu |  TASK [nano_analysis : call methylation] ****************************************
+2018-09-25 16:00:20,119 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:00:20,179 p=8800 u=ubuntu |  TASK [nano_analysis : calculate methylation frequency] *************************
+2018-09-25 16:00:30,820 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:00:30,864 p=8800 u=ubuntu |  TASK [nano_analysis : correct name of column] **********************************
+2018-09-25 16:00:32,486 p=8800 u=ubuntu |   [WARNING]: Consider using the replace, lineinfile or template module rather
+than running sed.  If you need to use command because replace, lineinfile or
+template is insufficient you can add warn=False to this command task or set
+command_warnings=False in ansible.cfg to get rid of this message.
+
+2018-09-25 16:00:32,486 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:00:32,547 p=8800 u=ubuntu |  TASK [nano_analysis : compare methlation] **************************************
+2018-09-25 16:00:35,480 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:00:35,524 p=8800 u=ubuntu |  TASK [nano_analysis : R script to make graph] **********************************
+2018-09-25 16:00:38,578 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:00:38,631 p=8800 u=ubuntu |  TASK [nano_analysis : retrieve output] *****************************************
+2018-09-25 16:01:20,107 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:01:20,166 p=8800 u=ubuntu |  TASK [nano_analysis : retrieve pdf] ********************************************
+2018-09-25 16:01:22,463 p=8800 u=ubuntu |  changed: [container]
+2018-09-25 16:01:22,466 p=8800 u=ubuntu |  PLAY RECAP *********************************************************************
+2018-09-25 16:01:22,467 p=8800 u=ubuntu |  container                  : ok=14   changed=13   unreachable=0    failed=0   
+2018-09-25 16:01:22,467 p=8800 u=ubuntu |  Playbook run took 0 days, 0 hours, 18 minutes, 31 seconds
+2018-09-25 16:29:17,368 p=9246 u=ubuntu |  PLAY [localhost] ***************************************************************
+2018-09-25 16:29:17,380 p=9246 u=ubuntu |  TASK [Gathering Facts] *********************************************************
+2018-09-25 16:29:18,205 p=9246 u=ubuntu |  ok: [localhost]
+2018-09-25 16:29:18,259 p=9246 u=ubuntu |  TASK [move log file to results folder] *****************************************
+2018-09-25 16:29:18,571 p=9246 u=ubuntu |  changed: [localhost]
+2018-09-25 16:29:18,579 p=9246 u=ubuntu |  PLAY [target] ******************************************************************
+2018-09-25 16:29:18,585 p=9246 u=ubuntu |  TASK [Gathering Facts] *********************************************************
+2018-09-25 16:29:28,141 p=9246 u=ubuntu |  ok: [container]
+2018-09-25 16:29:28,208 p=9246 u=ubuntu |  TASK [remove files from previous experiment] ***********************************
+2018-09-25 16:29:33,087 p=9246 u=ubuntu |  ok: [container] => (item=/root/reference.fasta)
+2018-09-25 16:29:37,634 p=9246 u=ubuntu |  ok: [container] => (item=/root/Straw-ERFv27-WGBS_S14_L003_R1_001.fastq)
+2018-09-25 16:29:42,010 p=9246 u=ubuntu |  ok: [container] => (item=/root/Straw-ERFv27-WGBS_S14_L003_R2_001.fastq)
+2018-09-25 16:29:46,335 p=9246 u=ubuntu |  ok: [container] => (item=/root/result1)
+2018-09-25 16:29:50,574 p=9246 u=ubuntu |  ok: [container] => (item=/root/result2)
+2018-09-25 16:29:56,052 p=9246 u=ubuntu |  ok: [container] => (item=/root/result3)
+2018-09-25 16:30:00,797 p=9246 u=ubuntu |  ok: [container] => (item=/root/TO1000_leaf_ACAGTG_R1_001.fastq)
+2018-09-25 16:30:05,557 p=9246 u=ubuntu |  ok: [container] => (item=/root/TO1000_leaf_ACAGTG_R2_001.fastq)
+2018-09-25 16:30:10,979 p=9246 u=ubuntu |  changed: [container] => (item=/root/methylation_example)
+2018-09-25 16:30:10,989 p=9246 u=ubuntu |  PLAY RECAP *********************************************************************
+2018-09-25 16:30:10,989 p=9246 u=ubuntu |  container                  : ok=2    changed=1    unreachable=0    failed=0   
+2018-09-25 16:30:10,990 p=9246 u=ubuntu |  localhost                  : ok=2    changed=1    unreachable=0    failed=0   
+2018-09-25 16:30:10,990 p=9246 u=ubuntu |  Playbook run took 0 days, 0 hours, 0 minutes, 53 seconds

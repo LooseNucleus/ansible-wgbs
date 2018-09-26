@@ -7,4 +7,4 @@ query_file2: TO1000_leaf_ACAGTG_R2_001.fastq
 result1: result1
 result2: result2
 result3: result3
-data_folder: /Users/bryn/Desktop
+data_folder: /mnt/ubuntu/results

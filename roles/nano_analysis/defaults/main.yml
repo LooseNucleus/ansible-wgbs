@@ -1,0 +1,3 @@
+---
+dest_folder: "{{ ansible_env.HOME }}"
+data_folder: /mnt/ubuntu/results

@@ -7,4 +7,4 @@ query_file2: Straw-ERFv27-WGBS_S14_L003_R2_001.fastq
 result1: result1
 result2: result2
 result3: result3
-data_folder: /Users/bryn/Desktop
+data_folder: /mnt/ubuntu/results/

@@ -2,4 +2,7 @@
 - hosts: localhost
   tasks: 
   - name: delete contents of log file 
-    shell: echo "" > /Users/bryn/Desktop/logs/ansible.log
+    shell: echo "" > /mnt/ubuntu/ansible-wgbs/logs/ansible.log
+
+  - name: delete contents of results file
+    shell: /bin/rm -rf /mnt/ubuntu/results/*

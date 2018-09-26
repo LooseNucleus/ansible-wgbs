@@ -1,0 +1,8 @@
+---
+- hosts: target
+  become: yes
+  roles:
+  - samtools 
+  - nanopolish 
+  - minimap2 
+

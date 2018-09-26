@@ -28,15 +28,15 @@
 
 #begin the analysis 
 - name: perform the analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} -S 1" 
+  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} -u -S 1" 
 
 #perform the second analysis 
 - name: perform second analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} -S 1" 
+  command: "bsmap -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} -u -S 1" 
 
 #perform third analysis 
 - name: perform third analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -S 1"
+  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -u -S 1"
 
 #retrieve the intermediate results 
 #- name: retrieve results 
@@ -59,9 +59,9 @@
 - name: retrieve final methylation results
   fetch: src={{ item }} dest={{ data_folder }}/ flat=yes
   with_items:
-    - methylRatioResult1
-    - methylRatioResult2
-    - methylRatioResult3
+    - "{{ dest_folder }}/methylRatioResult1"
+    - "{{ dest_folder }}/methylRatioResult2"
+    - "{{ dest_folder }}/methylRatioResult3"
   tags: delivery 
 
 

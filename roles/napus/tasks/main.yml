@@ -18,18 +18,18 @@
   command: gunzip --force {{ query_file1 }}.gz chdir={{ dest_folder }}
 
 - name: decrompress second data file
-  command: gunzip --force {{ query_fil2 }}.gz chdir={{ dest_folder }}
+  command: gunzip --force {{ query_file2 }}.gz chdir={{ dest_folder }}
 
 - name: perform the analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} -S 1" 
+  command: "bsmap -r 0 -a {{ dest_folder }}/{{ query_file1 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result1 }} -S 1" 
 
 #perform the second analysis 
 - name: perform second analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} -S 1" 
+  command: "bsmap -r 0 -a {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder }}/{{ ref_file }} -o {{ dest_folder }}/{{ result2 }} -S 1" 
 
 #perform third analysis 
 - name: perform third analysis 
-  command: "bsmap -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -S 1"
+  command: "bsmap -r 0 -a {{ dest_folder }}/{{ query_file1 }} -b {{ dest_folder }}/{{ query_file2 }} -d {{ dest_folder}}/{{ ref_file }} -o {{ dest_folder}}/{{ result3 }} -S 1"
 
 #retrieve the intermediate results 
 #- name: retrieve results 

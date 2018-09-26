@@ -1,0 +1,70 @@
+---
+- name: copy over files
+  copy:
+    src: files/ 
+    dest: "{{ dest_folder }}"
+    force: no
+
+- name: decompress the folder 
+  command: gunzip --force methylation_example.tar.gz chdir={{ dest_folder }}
+  ignore_errors: yes
+
+- name: untar archive
+  command: tar -xf methylation_example.tar chdir={{ dest_folder }} 
+  ignore_errors: yes
+
+- name: create index file 
+  shell: "nanopolish index -d fast5_files/ albacore_output.fastq" 
+  args:
+    chdir: "{{ dest_folder }}/methylation_example"
+
+- name: align reads to the reference genome 
+  shell: "minimap2 -a -x map-ont reference.fasta albacore_output.fastq | samtools sort -o albacore_output.sorted.bam"
+  args:
+    chdir: "{{ dest_folder }}/methylation_example"
+
+- name: run samtools index 
+  command: samtools index albacore_output.sorted.bam 
+  args:
+    chdir: "{{ dest_folder }}/methylation_example"
+
+- name: call methylation 
+  shell: 'nanopolish call-methylation -t 8 -r albacore_output.fastq -b albacore_output.sorted.bam -g reference.fasta -w "chr20:5,000,000-10,000,000" > methylation_calls.tsv'
+  args:
+    chdir: "{{ dest_folder}}/methylation_example"
+
+- name: calculate methylation frequency 
+  shell: "{{ dest_folder }}/software/nanopolish/scripts/calculate_methylation_frequency.py -i methylation_calls.tsv > methylation_frequency.tsv"
+  args:
+    chdir: "{{ dest_folder }}/methylation_example"
+
+- name: correct name of column 
+  shell: "sed -i -e 's/num_motifs_in_group/num_cpgs_in_group/g' methylation_frequency.tsv"
+  args:
+    chdir: "{{ dest_folder}}/methylation_example"
+  tags:
+    - moreTesting
+
+- name: compare methlation 
+  shell: "cd {{ dest_folder }}/methylation_example && python compare_methylation.py bisulfite.ENCFF835NTC.example.tsv methylation_frequency.tsv > bisulfite_vs_nanopolish.tsv"
+  args:
+    chdir: "{{ dest_folder }}/methylation_example"
+  tags: 
+    - testing
+
+- name: R script to make graph
+  script: files/nanorscript.R
+  args:
+    executable: Rscript
+    chdir: "{{ dest_folder }}/methylation_example"
+  
+- name: retrieve output
+  fetch: 
+    src: "methylation_example/methylation_calls.tsv"
+    dest: "{{ data_folder }}"
+
+- name: retrieve pdf 
+  fetch: 
+    src: "methylation_example/bisulfiteVsNanopolish.pdf"
+    dest: "{{ data_folder }}"
+

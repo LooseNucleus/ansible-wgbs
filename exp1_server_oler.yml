@@ -1,0 +1,10 @@
+---
+- hosts: target
+  tasks: 
+  #- name: bsmap role
+  #  import_role: 
+  #    name: bsmap
+
+  - name: do analysis 
+    import_role: 
+      name: oleracea

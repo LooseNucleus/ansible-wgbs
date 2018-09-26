@@ -72,7 +72,6 @@
 - name: remove noninteractive filter on bashrc
   blockinfile: 
     path: "{{ ansible_env.PWD }}/.bashrc"
-    marker: "case $- in"
     state: absent
     block: |
       case $- in

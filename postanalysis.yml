@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  tasks: 
+  - name: move log file to results folder
+    shell: cp /mnt/ubuntu/ansible-wgbs/logs/ansible.log /mnt/ubuntu/results/ansible.log 
+- hosts: target
+  tasks: 
+  - name: remove files from previous experiment 
+    file: 
+      path: "{{ item }}"
+      state: absent 
+    with_items: 
+    - "{{ ansible_env.HOME }}/reference.fasta"
+    - "{{ ansible_env.HOME }}/Straw-ERFv27-WGBS_S14_L003_R1_001.fastq"
+    - "{{ ansible_env.HOME }}/Straw-ERFv27-WGBS_S14_L003_R2_001.fastq"
+    - "{{ ansible_env.HOME }}/result1"
+    - "{{ ansible_env.HOME }}/result2"
+    - "{{ ansible_env.HOME }}/result3"
+    - "{{ ansible_env.HOME }}/TO1000_leaf_ACAGTG_R1_001.fastq"
+    - "{{ ansible_env.HOME }}/TO1000_leaf_ACAGTG_R2_001.fastq"
+    - "{{ ansible_env.HOME }}/methylation_example"

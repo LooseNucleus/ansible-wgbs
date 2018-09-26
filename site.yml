@@ -1,9 +1,9 @@
 ---
 
-- hosts: centos
+- hosts: ubuntu
   roles: 
-    - coadunate.devtools
-#    - bsmap
+    - { role: coadunate.devtools, become: yes }
+    - bsmap
 #    - analysis 
 #   - bismark
 #    - minimap2
